@@ -1,0 +1,20 @@
+{
+  "gateway": {
+    "mode": "local",
+    "bind": "lan",
+    "controlUi": { "enabled": true },
+    "auth": { "mode": "token" }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": []
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "anthropic/claude-sonnet-4-6"
+    }
+  }
+}
