@@ -9,7 +9,7 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "allowlist",
-      "allowFrom": []
+      "allowFrom": [8638104723]
     }
   },
   "agents": {
