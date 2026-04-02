@@ -9,7 +9,7 @@ One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railwa
 - OpenClaw gateway with token auth
 - Telegram bot channel (allowlist DM policy)
 - Health checks (`/health`, `/readyz`)
-- Auto-restart on failure (5 retries)
+- Auto-restart on failure (10 retries)
 
 ## Environment Variables
 
@@ -17,20 +17,24 @@ One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railwa
 
 | Variable | Description |
 |----------|-------------|
-| `ANTHROPIC_API_KEY` | Anthropic API key for Claude models |
-| `OPENCLAW_GATEWAY_TOKEN` | Gateway auth token — use `${{secret(32)}}` in Railway template |
+| `ANTHROPIC_API_KEY` | Powers the agent's conversational model (Claude) |
+| `OPENCLAW_GATEWAY_TOKEN` | Random string to secure gateway API access |
 | `TELEGRAM_BOT_TOKEN` | Bot token from [@BotFather](https://t.me/BotFather) |
-| `TELEGRAM_ALLOW_FROM` | Comma-separated Telegram user IDs (find yours via [@userinfobot](https://t.me/userinfobot)) |
+| `TELEGRAM_ALLOW_FROM` | Comma-separated Telegram user IDs allowed to message the bot |
 
 ### Optional
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `OPENCLAW_MODEL` | `anthropic/claude-sonnet-4-6` | Default agent model |
-| `TELEGRAM_DM_POLICY` | `allowlist` | `allowlist` or `open` |
-| `CONTROL_UI_ENABLED` | `true` | Toggle the gateway Control UI |
-| `OPENAI_API_KEY` | — | Required only if using OpenAI models |
-| `BRAVE_SEARCH_API_KEY` | — | Required only if using web search tool |
+| `TELEGRAM_DM_POLICY` | `allowlist` | DM access policy: `allowlist` or `open` |
+| `CONTROL_UI_ENABLED` | `true` | Enable gateway Control UI (true/false) |
+| `OPENAI_API_KEY` | — | Alternative LLM provider for GPT models (fallback if no Anthropic key) |
+| `BRAVE_API_KEY` | — | Enables the web_search tool for live web results |
+
+## Volume
+
+This template attaches a persistent volume at `/root/.openclaw` to preserve config, conversation history, and agent state across redeploys.
 
 ## How It Works
 
