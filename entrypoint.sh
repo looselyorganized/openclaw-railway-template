@@ -2,32 +2,78 @@
 set -euo pipefail
 
 OC_HOME="${OC_HOME:-$HOME/.openclaw}"
+CONFIG="$OC_HOME/openclaw.json"
 
 # --- First-boot config seeding ---
-if [ ! -f "$OC_HOME/openclaw.json" ]; then
-  echo "First boot detected — seeding default config..."
+if [ ! -f "$CONFIG" ]; then
+  echo "First boot — seeding default config..."
   mkdir -p "$OC_HOME"
-  cp /app/openclaw.json.default "$OC_HOME/openclaw.json"
+  cp /app/openclaw.json.default "$CONFIG"
 fi
 
-# --- Inject TELEGRAM_BOT_TOKEN into config ---
-if [ -n "${TELEGRAM_BOT_TOKEN:-}" ]; then
-  echo "Injecting TELEGRAM_BOT_TOKEN..."
+# --- Bridge Railway PORT to OpenClaw ---
+if [ -n "${PORT:-}" ]; then
+  export OPENCLAW_GATEWAY_PORT="$PORT"
+  echo "Bridging Railway PORT=$PORT → OPENCLAW_GATEWAY_PORT"
+fi
+
+# --- Inject configurable values into config ---
+inject_config() {
+  local tmp="$CONFIG.tmp"
   node -e "
     const fs = require('fs');
-    const configPath = '$OC_HOME/openclaw.json';
-    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-    config.channels = config.channels || {};
-    config.channels.telegram = config.channels.telegram || {};
-    config.channels.telegram.botToken = process.env.TELEGRAM_BOT_TOKEN;
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+    const c = JSON.parse(fs.readFileSync('$CONFIG', 'utf8'));
+
+    // Telegram bot token
+    if (process.env.TELEGRAM_BOT_TOKEN) {
+      c.channels = c.channels || {};
+      c.channels.telegram = c.channels.telegram || {};
+      c.channels.telegram.botToken = process.env.TELEGRAM_BOT_TOKEN;
+    }
+
+    // Telegram allow list (comma-separated IDs)
+    if (process.env.TELEGRAM_ALLOW_FROM) {
+      c.channels = c.channels || {};
+      c.channels.telegram = c.channels.telegram || {};
+      c.channels.telegram.allowFrom = process.env.TELEGRAM_ALLOW_FROM
+        .split(',')
+        .map(id => parseInt(id.trim(), 10))
+        .filter(id => !isNaN(id));
+    }
+
+    // Telegram DM policy
+    if (process.env.TELEGRAM_DM_POLICY) {
+      c.channels = c.channels || {};
+      c.channels.telegram = c.channels.telegram || {};
+      c.channels.telegram.dmPolicy = process.env.TELEGRAM_DM_POLICY;
+    }
+
+    // Default model
+    if (process.env.OPENCLAW_MODEL) {
+      c.agents = c.agents || {};
+      c.agents.defaults = c.agents.defaults || {};
+      c.agents.defaults.model = process.env.OPENCLAW_MODEL;
+    }
+
+    // Control UI toggle
+    if (process.env.CONTROL_UI_ENABLED !== undefined) {
+      c.gateway = c.gateway || {};
+      c.gateway.controlUi = c.gateway.controlUi || {};
+      c.gateway.controlUi.enabled = process.env.CONTROL_UI_ENABLED !== 'false';
+    }
+
+    fs.writeFileSync('$tmp', JSON.stringify(c, null, 2));
   "
-fi
+  mv "$tmp" "$CONFIG"
+  echo "Config updated with environment overrides"
+}
+
+inject_config
 
 # --- Validate config ---
 echo "Running openclaw doctor..."
 openclaw doctor --fix --yes
 
 # --- Start gateway ---
-echo "Starting OpenClaw gateway..."
+echo "Starting OpenClaw gateway on port ${OPENCLAW_GATEWAY_PORT:-18789}..."
 exec openclaw gateway
