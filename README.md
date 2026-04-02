@@ -36,7 +36,7 @@ One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railwa
 
 ## Volume
 
-This template attaches a persistent volume at `/home/node/.openclaw` to preserve config, conversation history, and agent state across redeploys.
+This template attaches a persistent volume at `/root/.openclaw` to preserve config, conversation history, and agent state across redeploys.
 
 ## How It Works
 
