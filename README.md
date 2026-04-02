@@ -33,8 +33,12 @@ In your Railway service settings, add the following variables:
 | `ANTHROPIC_API_KEY` | Yes | Your Anthropic API key for Claude |
 | `OPENCLAW_GATEWAY_TOKEN` | Yes | A secret token for authenticating with the gateway API |
 | `TELEGRAM_BOT_TOKEN` | For Telegram | Telegram bot token from [@BotFather](https://t.me/BotFather) |
+| `TELEGRAM_ALLOW_FROM` | For Telegram | Comma-separated Telegram user IDs allowed to message the bot (e.g. `123456,789012`) |
+| `TELEGRAM_DM_POLICY` | No | DM policy: `allowlist` (default) or `open` |
 | `OPENAI_API_KEY` | No | OpenAI API key for semantic memory embeddings |
 | `BRAVE_SEARCH_API_KEY` | No | Brave Search API key for web search capability |
+
+Find your Telegram user ID by messaging [@userinfobot](https://t.me/userinfobot).
 
 ### 3. Configure Networking
 
@@ -79,17 +83,17 @@ The default configuration template lives in `openclaw.json`:
 
 ### Key settings
 
-- **`channels.telegram.allowFrom`** — Array of Telegram user IDs allowed to message the bot. Find your ID using [@userinfobot](https://t.me/userinfobot).
-- **`channels.telegram.dmPolicy`** — Set to `"allowlist"` to restrict access or `"open"` to allow anyone.
 - **`agents.defaults.model`** — The default Claude model for agents.
+
+All Telegram-specific settings (`botToken`, `allowFrom`, `dmPolicy`) are injected from environment variables at startup — you should not need to edit `openclaw.json` for per-instance configuration.
 
 ### Persistence warning
 
 Railway containers are **ephemeral** — the filesystem is wiped on every redeploy. This means:
 
-- The first-boot config seeding in `entrypoint.sh` runs on **every deploy**, resetting `~/.openclaw/openclaw.json` to the template defaults.
+- Config is re-seeded from `openclaw.json` and env vars on **every deploy**.
 - Any configuration changes made through the Control UI will be **lost on the next deploy**.
-- To make permanent config changes, edit `openclaw.json` in this repo and redeploy.
+- To change base config, edit `openclaw.json` in this repo. For instance-specific values, use environment variables.
 
 If you need persistent runtime config, attach a [Railway volume](https://docs.railway.com/guides/volumes) mounted at `/root/.openclaw`.
 
@@ -106,7 +110,7 @@ If you need persistent runtime config, attach a [Railway volume](https://docs.ra
 ## How It Works
 
 1. The `Dockerfile` pulls the official `ghcr.io/openclaw/openclaw:latest` image
-2. On startup, `entrypoint.sh` seeds the default config and injects `TELEGRAM_BOT_TOKEN` if set
+2. On startup, `entrypoint.sh` seeds the default config and injects Telegram settings from env vars
 3. `openclaw doctor --fix --yes` validates and auto-fixes the configuration
 4. The gateway starts and listens on port `18789`
 
@@ -129,7 +133,7 @@ Visit `http://localhost:18789` to access the control UI.
 
 | Problem | Likely cause |
 |---|---|
-| Gateway starts but Telegram bot doesn't respond | `TELEGRAM_BOT_TOKEN` is missing or invalid, or your Telegram user ID is not in `allowFrom` |
+| Gateway starts but Telegram bot doesn't respond | `TELEGRAM_BOT_TOKEN` is missing or invalid, or your Telegram user ID is not in `TELEGRAM_ALLOW_FROM` |
 | 401 Unauthorized from the gateway API | `OPENCLAW_GATEWAY_TOKEN` is missing or doesn't match your request |
 | Control UI unreachable after deploy | No public domain generated — see [Configure Networking](#3-configure-networking) |
 | Config changes lost after redeploy | Expected — Railway containers are ephemeral. Edit `openclaw.json` in the repo or attach a volume |
