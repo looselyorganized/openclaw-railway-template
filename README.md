@@ -8,7 +8,7 @@ One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railwa
 
 - OpenClaw gateway with token auth
 - Telegram bot channel (allowlist DM policy)
-- Health checks (`/healthz`, `/readyz`)
+- Health checks (`/health`, `/readyz`)
 - Auto-restart on failure (5 retries)
 
 ## Environment Variables
@@ -39,7 +39,7 @@ One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railwa
 3. Environment variables are injected into the config at startup
 4. Railway's `PORT` is bridged to `OPENCLAW_GATEWAY_PORT`
 5. `openclaw doctor --fix --yes` validates the config
-6. The gateway starts and Railway healthchecks `/healthz`
+6. The gateway starts and Railway healthchecks `/health`
 
 ## Local Development
 
