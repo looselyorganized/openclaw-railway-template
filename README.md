@@ -22,7 +22,7 @@ One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railwa
 | `ANTHROPIC_API_KEY` | Powers the agent's conversational model (Claude) |
 | `OPENCLAW_GATEWAY_TOKEN` | Random string to secure gateway API access |
 | `TELEGRAM_BOT_TOKEN` | Bot token from [@BotFather](https://t.me/BotFather) |
-| `TELEGRAM_ALLOW_FROM` | Comma-separated Telegram user IDs allowed to message the bot |
+| `TELEGRAM_ALLOW_FROM` | Your Telegram user ID (comma-separated for multiple users) |
 
 ### Optional
 
