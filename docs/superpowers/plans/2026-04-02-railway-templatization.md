@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Make openclaw-railway-template a proper Railway template — no hardcoded values, all config injectable at deploy time, Railway-native healthcheck and restart behavior.
+**Goal:** Make railclaw a proper Railway template — no hardcoded values, all config injectable at deploy time, Railway-native healthcheck and restart behavior.
 
 **Architecture:** The OpenClaw gateway reads `openclaw.json` for config with native `${VAR}` env var substitution. The entrypoint bridges Railway's `PORT` to `OPENCLAW_GATEWAY_PORT`, injects user-configurable values (Telegram allowlist, model, DM policy) into the config JSON, then starts the gateway. Railway's `railway.toml` handles healthcheck (`/healthz` — native to OpenClaw), restart policy, and builder selection.
 

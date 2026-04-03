@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-1.1.0-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fopenclaw%2Fopenclaw-blue?logo=docker) ![Railway](https://img.shields.io/badge/deploy-Railway-blueviolet?logo=railway) ![OpenClaw](https://img.shields.io/badge/powered%20by-OpenClaw-red)
 
-RailClaw is a secure, containerized, one-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railway.com) — a pre-configured gateway with Control UI, token auth, and persistent storage. No manual config files, no CLI setup, just deploy and connect.
+RailClaw is a secure, containerized, one-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railway.com) — a pre-configured gateway with Control UI, token auth, channel health monitoring and persistent storage. No manual config files, no CLI setup, just deploy and connect.
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/railclaw-1?referralCode=MPKvO7&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
@@ -33,6 +33,7 @@ Railway handles the container lifecycle, health checks, and automatic restarts �
 
 ### Deployment Dependencies
 
+- https://github.com/looselyorganized/railclaw
 - https://docs.openclaw.ai
 - https://github.com/openclaw/openclaw
 - https://ghcr.io/openclaw/openclaw
