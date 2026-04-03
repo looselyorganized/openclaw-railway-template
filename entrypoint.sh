@@ -18,30 +18,6 @@ inject_config() {
     const fs = require('fs');
     const c = JSON.parse(fs.readFileSync('$CONFIG', 'utf8'));
 
-    // Telegram bot token
-    if (process.env.TELEGRAM_BOT_TOKEN) {
-      c.channels = c.channels || {};
-      c.channels.telegram = c.channels.telegram || {};
-      c.channels.telegram.botToken = process.env.TELEGRAM_BOT_TOKEN;
-    }
-
-    // Telegram allow list (comma-separated IDs)
-    if (process.env.TELEGRAM_ALLOW_FROM) {
-      c.channels = c.channels || {};
-      c.channels.telegram = c.channels.telegram || {};
-      c.channels.telegram.allowFrom = process.env.TELEGRAM_ALLOW_FROM
-        .split(',')
-        .map(id => parseInt(id.trim(), 10))
-        .filter(id => !isNaN(id));
-    }
-
-    // Telegram DM policy
-    if (process.env.TELEGRAM_DM_POLICY) {
-      c.channels = c.channels || {};
-      c.channels.telegram = c.channels.telegram || {};
-      c.channels.telegram.dmPolicy = process.env.TELEGRAM_DM_POLICY;
-    }
-
     // Default model
     if (process.env.OPENCLAW_MODEL) {
       c.agents = c.agents || {};
@@ -49,11 +25,12 @@ inject_config() {
       c.agents.defaults.model = process.env.OPENCLAW_MODEL;
     }
 
-    // Control UI toggle
-    if (process.env.CONTROL_UI_ENABLED !== undefined) {
+    // Gateway auth token
+    if (process.env.OPENCLAW_GATEWAY_TOKEN) {
       c.gateway = c.gateway || {};
-      c.gateway.controlUi = c.gateway.controlUi || {};
-      c.gateway.controlUi.enabled = process.env.CONTROL_UI_ENABLED !== 'false';
+      c.gateway.auth = c.gateway.auth || {};
+      c.gateway.auth.mode = 'token';
+      c.gateway.auth.token = process.env.OPENCLAW_GATEWAY_TOKEN;
     }
 
     // Allow Control UI from Railway public domain
@@ -64,6 +41,7 @@ inject_config() {
         'https://' + process.env.RAILWAY_PUBLIC_DOMAIN
       ];
     }
+
 
     fs.writeFileSync('$tmp', JSON.stringify(c, null, 2));
   "

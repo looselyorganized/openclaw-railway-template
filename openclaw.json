@@ -3,14 +3,7 @@
     "mode": "local",
     "bind": "lan",
     "controlUi": { "enabled": true },
-    "auth": { "mode": "token", "token": "${OPENCLAW_GATEWAY_TOKEN}" }
-  },
-  "channels": {
-    "telegram": {
-      "enabled": true,
-      "dmPolicy": "allowlist",
-      "allowFrom": []
-    }
+    "auth": { "mode": "token" }
   },
   "agents": {
     "defaults": {
