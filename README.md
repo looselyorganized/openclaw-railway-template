@@ -11,7 +11,7 @@ One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railwa
 - OpenClaw gateway with token auth
 - Telegram bot channel (allowlist DM policy)
 - Health checks (`/health`, `/readyz`)
-- Auto-restart on failure (10 retries)
+- Auto-restart on failure (5 retries)
 
 ## Environment Variables
 
@@ -43,9 +43,8 @@ This template attaches a persistent volume at `/root/.openclaw` to preserve conf
 1. Railway builds the Docker image from `ghcr.io/openclaw/openclaw:latest`
 2. On first boot, the entrypoint seeds the default config
 3. Environment variables are injected into the config at startup
-4. Railway's `PORT` is bridged to `OPENCLAW_GATEWAY_PORT`
-5. `openclaw doctor --fix --yes` validates the config
-6. The gateway starts and Railway healthchecks `/health`
+4. `openclaw doctor --fix --yes` validates the config
+5. The gateway starts on port 18789 and Railway healthchecks `/health`
 
 ## Local Development
 

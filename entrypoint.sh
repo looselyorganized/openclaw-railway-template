@@ -11,12 +11,6 @@ if [ ! -f "$CONFIG" ]; then
   cp /app/openclaw.json.default "$CONFIG"
 fi
 
-# --- Bridge Railway PORT to OpenClaw ---
-if [ -n "${PORT:-}" ]; then
-  export OPENCLAW_GATEWAY_PORT="$PORT"
-  echo "Bridging Railway PORT=$PORT → OPENCLAW_GATEWAY_PORT"
-fi
-
 # --- Inject configurable values into config ---
 inject_config() {
   local tmp="$CONFIG.tmp"
@@ -75,5 +69,5 @@ echo "Running openclaw doctor..."
 openclaw doctor --fix --yes
 
 # --- Start gateway ---
-echo "Starting OpenClaw gateway on port ${OPENCLAW_GATEWAY_PORT:-18789}..."
+echo "Starting OpenClaw gateway..."
 exec openclaw gateway
