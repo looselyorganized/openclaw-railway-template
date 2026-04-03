@@ -56,6 +56,15 @@ inject_config() {
       c.gateway.controlUi.enabled = process.env.CONTROL_UI_ENABLED !== 'false';
     }
 
+    // Allow Control UI from Railway public domain
+    if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+      c.gateway = c.gateway || {};
+      c.gateway.controlUi = c.gateway.controlUi || {};
+      c.gateway.controlUi.allowedOrigins = [
+        'https://' + process.env.RAILWAY_PUBLIC_DOMAIN
+      ];
+    }
+
     fs.writeFileSync('$tmp', JSON.stringify(c, null, 2));
   "
   mv "$tmp" "$CONFIG"
