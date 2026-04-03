@@ -1,6 +1,6 @@
-# OpenClaw Railway Template
+# RailClaw - OpenClaw Railway Template | ![Version](https://img.shields.io/badge/version-1.1.0-blue)
 
-One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railway.com) — a pre-configured gateway with Control UI, token auth, and persistent storage. No manual config files, no CLI setup, just deploy and connect.
+RailClaw is a secure, containerized, one-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railway.com) — a pre-configured gateway with Control UI, token auth, and persistent storage. No manual config files, no CLI setup, just deploy and connect.
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/railclaw-1?referralCode=MPKvO7&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
