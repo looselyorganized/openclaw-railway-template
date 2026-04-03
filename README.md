@@ -1,8 +1,10 @@
-# Deploy and Host RailClaw on Railway
+# OpenClaw Railway Template
 
-RailClaw is an open-source AI agent gateway that connects language models to messaging channels like Telegram, WhatsApp, Discord, and Slack. It provides a single multiplexed endpoint for WebSocket and HTTP traffic, built-in auth, a control UI, and channel health monitoring out of the box.
+One-click deploy of [OpenClaw](https://openclaw.dev) on [Railway](https://railway.com) — a pre-configured gateway with Control UI, token auth, and persistent storage. No manual config files, no CLI setup, just deploy and connect.
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/railclaw-1?referralCode=MPKvO7&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
+![Version](https://img.shields.io/badge/version-1.1.0-blue)
 
 ## About Hosting RailClaw
 
