@@ -22,14 +22,18 @@ Railway handles the container lifecycle, health checks, and automatic restarts �
 
 ### Required
 
-- An Anthropic API key to power the agent's conversational model
-- A gateway auth token — any random string to secure API access
+- `ANTHROPIC_API_KEY` — Powers the agent's conversational model (Claude)
+- `OPENCLAW_GATEWAY_TOKEN` — Random string to secure gateway API access. Generate one with:
+  ```bash
+  openssl rand -hex 32
+  ```
+- `PORT` — Must be set to `18789`
 
 ### Optional
 
-- An OpenAI API key for GPT models as a fallback provider
-- A Brave API key to enable the web_search tool
-- A custom model identifier (e.g. `anthropic/claude-sonnet-4-6`)
+- `OPENAI_API_KEY` — Alternative LLM provider for GPT models
+- `BRAVE_API_KEY` — Enables the web_search tool for live web results
+- `OPENCLAW_MODEL` — Default agent model (default: `anthropic/claude-sonnet-4-6`)
 
 ### Deployment Dependencies
 
