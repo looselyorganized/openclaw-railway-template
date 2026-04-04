@@ -12,11 +12,22 @@ Hosting RailClaw requires a persistent process that stays online to maintain con
 
 Railway handles the container lifecycle, health checks, and automatic restarts — so the gateway stays available without manual intervention. Configuration is injected via environment variables at deploy time, with no files to manage.
 
-## Common Use Cases
+## What People Build With OpenClaw
 
-- Run a personal AI assistant on Telegram with allowlist-based access control
-- Deploy a customer-facing conversational agent backed by Claude or GPT models
-- Host a multi-channel gateway that bridges AI models to messaging platforms like Telegram, WhatsApp, Discord, and Slack
+| Use Case | What It Does |
+|----------|-------------|
+| **Self-Healing Home Server** | 24/7 infra agent with SSH access to K8s, Terraform, and Ansible — monitors, diagnoses, and fixes problems autonomously at 3am before you wake up |
+| **Overnight App Factory** | Dump your goals into OpenClaw, go to sleep, wake up with new MVPs shipped — the agent generates tasks and builds apps aligned with your objectives |
+| **Multi-Channel Customer Service** | Unified AI support across WhatsApp, Instagram, Gmail, and Google Reviews with human escalation rules and multi-language responses |
+| **Personal Knowledge Graph** | Text anything to your agent — links, ideas, reminders — and it stores them permanently in a searchable knowledge base you own |
+| **Parallel Multi-Agent Teams** | Coordinate research, dev, and marketing sub-agents from a single Telegram chat — concurrent specialists reporting to one orchestrator |
+| **Personal Finance Assistant** | Ask "How much did I spend on rideshares?" via chat — the agent queries your plain-text accounting journals without your data leaving your machine |
+| **Content Production Pipeline** | Draft in Obsidian while the agent makes live edits, generates images, publishes to your CMS, deploys, and posts to Hacker News |
+| **Multi-Source News Digest** | Aggregates 109+ sources (RSS, Twitter/X, GitHub trending, web search), quality-scores articles, and delivers a curated digest on your schedule |
+| **Phone-Based Voice Assistant** | Two-way voice calls with your full agent — morning briefings, price alerts, calendar queries, hands-free while driving |
+| **Self-Extending Agent** | The agent writes its own new skills on demand, extending its capabilities whenever you need a new integration or tool |
+
+> See the [awesome-openclaw-usecases](https://github.com/hesamsheikh/awesome-openclaw-usecases) community repo for 40+ documented use cases with setup guides.
 
 ## Dependencies for RailClaw Hosting
 
