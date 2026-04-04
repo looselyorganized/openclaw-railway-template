@@ -34,11 +34,12 @@ Railway handles the container lifecycle, health checks, and automatic restarts �
 ### Required
 
 - `ANTHROPIC_API_KEY` — Powers the agent's conversational model (Claude)
-- `OPENCLAW_GATEWAY_TOKEN` — Random string to secure gateway API access. Generate one with:
+- `OPENCLAW_GATEWAY_TOKEN` — Random string to secure gateway API access.
+  Generate one with:
   ```bash
   openssl rand -hex 32
   ```
-- `PORT` — Must be set to `18789`
+- `PORT` — Must be set to `18789` (Included)
 
 ### Optional
 
